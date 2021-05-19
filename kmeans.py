@@ -1,19 +1,7 @@
 import math
-#extracting the dataset
+#the dataset
 x = [2,2,8,5,7,6,1,4]
 y = [10,5,4,8,5,4,2,9]
-#dataset = open('dataset.txt')
-#for i in dataset:
-#    x[i]= i.split()[0]
-#    y[i]= i.split()[1]
-
-#cluster data into k groups
-
-#select points for center of centeroid
-
-#take the x and y at each point and calculate ecludian distance
-#to each centroid
-
 
 #choose which custer the point belongs to
 
@@ -29,9 +17,14 @@ y = [10,5,4,8,5,4,2,9]
 k = 3
 
 #the cluster centroid point no.
-cluster1 = 0
-cluster2 = 3
-cluster3 = 6
+cluster1_x = x[0]
+cluster1_y = y[0]
+
+cluster2_x = x[3]
+cluster2_y = y[3]
+
+cluster3_x = x[6]
+cluster3_y = y[6]
 
 #the cluster lists contains points in that cluster
 cluster1_list = []
@@ -42,18 +35,23 @@ cluster3_list = []
 e_distance_cluster1 = 0.0
 e_distance_cluster2 = 0.0
 e_distance_cluster3 = 0.0
-a = 0
+
+#convergence check variables
+converge = False
+converge_prev_value = 0.0
+converge_current_value = 0.0
+
 #finding cluster groupings
-while (a < 3):
-    a+=1
+while (converge == False):
+
+    #comparing each point to centroids
     for c in range(0,8):
         print(c)
-        e_distance_cluster1 = math.sqrt(((x[cluster1]-x[c])**2) +((y[cluster1]-y[c])**2))
-        e_distance_cluster2 = math.sqrt(((x[cluster2]-x[c])**2) +((y[cluster2]-y[c])**2))
-        e_distance_cluster3 = math.sqrt(((x[cluster3]-x[c])**2) +((y[cluster3]-y[c])**2))
+        e_distance_cluster1 = math.sqrt(((cluster1_x-x[c])**2) + ((cluster1_y-y[c])**2))
+        e_distance_cluster2 = math.sqrt(((cluster2_x-x[c])**2) + ((cluster2_y-y[c])**2))
+        e_distance_cluster3 = math.sqrt(((cluster3_x-x[c])**2) + ((cluster3_y-y[c])**2))
 
         list_max = [e_distance_cluster1,e_distance_cluster2,e_distance_cluster3]
-
 
         if (max(list_max) == e_distance_cluster1):
             #add to list of cluster 1
@@ -64,6 +62,11 @@ while (a < 3):
         elif(max(list_max) == e_distance_cluster3):
             #add to list of cluster 3
             cluster3_list.append(c)
+    
+    #calculate new centroids
+    
+
+        
 
 
 
