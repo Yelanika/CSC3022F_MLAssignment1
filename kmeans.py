@@ -16,16 +16,6 @@ y = [10,5,4,8,5,4,2,9]
 #number of cluster
 k = 3
 
-#the cluster centroid point no.
-cluster1_x = x[0]
-cluster1_y = y[0]
-
-cluster2_x = x[3]
-cluster2_y = y[3]
-
-cluster3_x = x[6]
-cluster3_y = y[6]
-
 #eculdian distance for each centroid
 e_distance_cluster1 = 0.0
 e_distance_cluster2 = 0.0
@@ -34,81 +24,73 @@ e_distance_cluster3 = 0.0
 #convergence check variables
 converge = False
 
-converge_prev_value_1_x = 0.0
-converge_prev_value_1_y = 0.0
+converge_prev_value_1_x = x[0]
+converge_prev_value_1_y = y[0]
 
-converge_prev_value_2_x = 0.0
-converge_prev_value_2_y = 0.0
+converge_prev_value_2_x = x[3]
+converge_prev_value_2_y = y[3]
 
-converge_prev_value_3_x = 0.0
-converge_prev_value_3_y = 0.0
-
-converge_current_value_1_x = 0.0
-converge_current_value_1_y = 0.0
-
-converge_current_value_2_x = 0.0
-converge_current_value_2_y = 0.0
-
-converge_current_value_3_x = 0.0
-converge_current_value_3_y = 0.0
+converge_prev_value_3_x = x[6]
+converge_prev_value_3_y = y[6]
 
 #iteration counter
 iteration = 1
 
+cluster1_list = [0]
+cluster2_list = [3]
+cluster3_list = [6]
+
 #finding cluster groupings
 while (converge == False):
 
-    converge_prev_value_1_x = converge_current_value_1_x
-    converge_prev_value_1_y = converge_current_value_1_y
-
-    converge_prev_value_2_x = converge_current_value_2_x
-    converge_prev_value_2_y = converge_current_value_2_y
-
-    converge_prev_value_3_x = converge_current_value_3_x
-    converge_prev_value_3_y = converge_current_value_3_y
-
     #the cluster lists contains points in that cluster
-    cluster1_list = []
-    cluster2_list = []
-    cluster3_list = []
+    
 
     #comparing each point to centroids
     for c in range(0,8):
-        print(c)
-        e_distance_cluster1 = math.sqrt(((cluster1_x-x[c])**2) + ((cluster1_y-y[c])**2))
-        e_distance_cluster2 = math.sqrt(((cluster2_x-x[c])**2) + ((cluster2_y-y[c])**2))
-        e_distance_cluster3 = math.sqrt(((cluster3_x-x[c])**2) + ((cluster3_y-y[c])**2))
+        e_distance_cluster1 = math.sqrt(((converge_prev_value_1_x-x[c])**2) + ((converge_prev_value_1_y-y[c])**2))
+        e_distance_cluster2 = math.sqrt(((converge_prev_value_2_x-x[c])**2) + ((converge_prev_value_2_y-y[c])**2))
+        e_distance_cluster3 = math.sqrt(((converge_prev_value_3_x-x[c])**2) + ((converge_prev_value_3_y-y[c])**2))
 
         list_max = [e_distance_cluster1,e_distance_cluster2,e_distance_cluster3]
 
-        if (max(list_max) == e_distance_cluster1):
-            #add to list of cluster 1
+        if (min(list_max) == e_distance_cluster1):
             cluster1_list.append(c)
-        elif(max(list_max) == e_distance_cluster2):
+        elif(min(list_max) == e_distance_cluster2):
             cluster2_list.append(c)
-            #add to list of cluster 2
-        elif(max(list_max) == e_distance_cluster3):
-            #add to list of cluster 3
+        elif(min(list_max) == e_distance_cluster3):
             cluster3_list.append(c)
     
+    converge_current_value_1_x = 0.0
+    converge_current_value_1_y = 0.0
+
+    converge_current_value_2_x = 0.0
+    converge_current_value_2_y = 0.0
+
+    converge_current_value_3_x = 0.0
+    converge_current_value_3_y = 0.0
+
     #calculate new centroids
-    for c1 in cluster1_list:
-        converge_current_value_1_x += x[c1]
-        converge_current_value_1_y += y[c1]
-    converge_current_value_1_x = converge_current_value_1_x/converge_current_value_1_x.len()
-    converge_current_value_1_y = converge_current_value_1_y/converge_current_value_1_y.len()    
+    if (len(cluster1_list) != 0):
+        for c1 in cluster1_list:
+            converge_current_value_1_x += x[c1]
+            converge_current_value_1_y += y[c1]
+        converge_current_value_1_x = converge_current_value_1_x/len(cluster1_list)
+        converge_current_value_1_y = converge_current_value_1_y/len(cluster1_list)    
 
-    for c2 in cluster2_list:
-        converge_current_value_2_x += x[c2]
-        converge_current_value_2_y += y[c2]
-    converge_current_value_2_x = converge_current_value_2_x/converge_current_value_2_x.len()
-    converge_current_value_2_y = converge_current_value_2_y/converge_current_value_2_y.len() 
+    if (len(cluster2_list) != 0):
+        for c2 in cluster2_list:
+            converge_current_value_2_x += x[c2]
+            converge_current_value_2_y += y[c2]
+        converge_current_value_2_x = converge_current_value_2_x/len(cluster2_list)
+        converge_current_value_2_y = converge_current_value_2_y/len(cluster2_list) 
 
-    for c3 in cluster3_list:
-        converge_current_value_3_x += x[c3]
-        converge_current_value_3_y += y[c3]
-    converge_current_value_3_x = converge_current_value_3_x/converge_current_value_3_x.len()
-    converge_current_value_3_y = converge_current_value_3_y/converge_current_value_3_y.len()     
+    if (len(cluster3_list) != 0):
+        for c3 in cluster3_list:
+            converge_current_value_3_x += x[c3]
+            converge_current_value_3_y += y[c3]
+        converge_current_value_3_x = converge_current_value_3_x/len(cluster3_list)
+        converge_current_value_3_y = converge_current_value_3_y/len(cluster3_list)     
 
     if (converge_prev_value_1_x == converge_current_value_1_x) and (converge_prev_value_1_y == converge_current_value_1_y) and (converge_prev_value_2_x == converge_current_value_2_x) and (converge_prev_value_2_y == converge_current_value_2_y) and (converge_prev_value_3_x == converge_current_value_3_x) and (converge_prev_value_3_y == converge_current_value_3_y):
         converge = True
@@ -125,5 +107,18 @@ while (converge == False):
     print("Centroid: (", converge_current_value_3_x, ", ", converge_current_value_3_y, ")")
 
     iteration += 1
+
+    converge_prev_value_1_x = converge_current_value_1_x
+    converge_prev_value_1_y = converge_current_value_1_y
+
+    converge_prev_value_2_x = converge_current_value_2_x
+    converge_prev_value_2_y = converge_current_value_2_y
+
+    converge_prev_value_3_x = converge_current_value_3_x
+    converge_prev_value_3_y = converge_current_value_3_y
+
+    cluster1_list = []
+    cluster2_list = []
+    cluster3_list = []
 
 
