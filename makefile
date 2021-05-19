@@ -5,7 +5,6 @@ venv:
 	test -d venv || python3 -m venv venv
 
 run:
-
 	python3 kmeans.py
 
 clean:
