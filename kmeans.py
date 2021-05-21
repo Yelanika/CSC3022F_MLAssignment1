@@ -3,16 +3,6 @@ import math
 x = [2,2,8,5,7,6,1,4]
 y = [10,5,4,8,5,4,2,9]
 
-#choose which custer the point belongs to
-
-#repeat the last two for every point
-
-#find the center[average] of each custer
-
-#then repeat from take x and y of each point and deciding whether it belongs to a cluster
-
-#stop when the centroid averages don't change
-
 #number of cluster
 k = 3
 
@@ -40,6 +30,17 @@ cluster1_list = [0]
 cluster2_list = [3]
 cluster3_list = [6]
 
+print("Iteration 0")
+
+print("Cluster 1: 1")
+print("Centroid: (", round(x[0],2), ", ", round(y[0],2) , ")")
+
+print("Cluster 2: 4")
+print("Centroid: (", round(x[3],2) , ", ", round(y[3],2) , ")")
+
+print("Cluster 3: 7")
+print("Centroid: (", round(x[6],2), ", ", round(y[6],2), ")")
+
 #finding cluster groupings
 while (converge == False):
 
@@ -48,18 +49,24 @@ while (converge == False):
 
     #comparing each point to centroids
     for c in range(0,8):
-        e_distance_cluster1 = math.sqrt(((converge_prev_value_1_x-x[c])**2) + ((converge_prev_value_1_y-y[c])**2))
-        e_distance_cluster2 = math.sqrt(((converge_prev_value_2_x-x[c])**2) + ((converge_prev_value_2_y-y[c])**2))
-        e_distance_cluster3 = math.sqrt(((converge_prev_value_3_x-x[c])**2) + ((converge_prev_value_3_y-y[c])**2))
+            e_distance_cluster1 = math.sqrt(((converge_prev_value_1_x-x[c])**2) + ((converge_prev_value_1_y-y[c])**2))
+            e_distance_cluster2 = math.sqrt(((converge_prev_value_2_x-x[c])**2) + ((converge_prev_value_2_y-y[c])**2))
+            e_distance_cluster3 = math.sqrt(((converge_prev_value_3_x-x[c])**2) + ((converge_prev_value_3_y-y[c])**2))
 
-        list_max = [e_distance_cluster1,e_distance_cluster2,e_distance_cluster3]
+            list_max = [e_distance_cluster1,e_distance_cluster2,e_distance_cluster3]
 
-        if (min(list_max) == e_distance_cluster1):
-            cluster1_list.append(c)
-        elif(min(list_max) == e_distance_cluster2):
-            cluster2_list.append(c)
-        elif(min(list_max) == e_distance_cluster3):
-            cluster3_list.append(c)
+            
+            if (min(list_max) == e_distance_cluster1):                
+                if c not in cluster1_list:
+                    cluster1_list.append(c) 
+            elif(min(list_max) == e_distance_cluster2):
+                if c not in cluster2_list:
+                    cluster2_list.append(c)
+            elif(min(list_max) == e_distance_cluster3):
+                if c not in cluster3_list:
+                    cluster3_list.append(c)
+
+    first_check = False
     
     converge_current_value_1_x = 0.0
     converge_current_value_1_y = 0.0
@@ -95,16 +102,26 @@ while (converge == False):
     if (converge_prev_value_1_x == converge_current_value_1_x) and (converge_prev_value_1_y == converge_current_value_1_y) and (converge_prev_value_2_x == converge_current_value_2_x) and (converge_prev_value_2_y == converge_current_value_2_y) and (converge_prev_value_3_x == converge_current_value_3_x) and (converge_prev_value_3_y == converge_current_value_3_y):
         converge = True
 
+    for k in range(0,len(cluster1_list)):
+        cluster1_list[k] +=1
+
+    for k in range(0,len(cluster2_list)):
+        cluster2_list[k] +=1
+
+    for k in range(0,len(cluster3_list)):
+        cluster3_list[k] +=1
+
+
     print("Iteration ", iteration)
 
     print("Cluster 1: ", *iter(cluster1_list), sep=' ')
-    print("Centroid: (", converge_current_value_1_x, ", ", converge_current_value_1_y, ")")
+    print("Centroid: (", round(converge_current_value_1_x, 2), ", ", round(converge_current_value_1_y,2) , ")")
 
     print("Cluster 2: ", *iter(cluster2_list), sep=' ')
-    print("Centroid: (", converge_current_value_2_x, ", ", converge_current_value_2_y, ")")
+    print("Centroid: (", round(converge_current_value_2_x,2) , ", ", round(converge_current_value_2_y,2) , ")")
 
     print("Cluster 3: ", *iter(cluster3_list), sep=' ')
-    print("Centroid: (", converge_current_value_3_x, ", ", converge_current_value_3_y, ")")
+    print("Centroid: (", round(converge_current_value_3_x,2), ", ", round(converge_current_value_3_y,2), ")")
 
     iteration += 1
 
