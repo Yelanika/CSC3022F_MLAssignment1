@@ -1,3 +1,7 @@
+#Yelanika Gunasekara
+#GNSSEN002
+#Assignment 1 ML
+
 #importing math for the sqrt function
 import math
 
